@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elderly Care & AI - Project Presentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505;
+            color: #ffffff;
+            margin: 0;
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
+        }
+        body::-webkit-scrollbar { display: none; }
+        
+        h1, h2, .syncopate-font {
+            font-family: 'Syncopate', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .panel {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; 
+        }
+
+        .img-container {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* 隔离层：专职负责视差滚动，绝对防漏底 */
+        .parallax-wrap {
+            position: absolute;
+            top: -20vh; 
+            left: 0;
+            width: 100%;
+            height: 140vh; 
+            will-change: transform;
+        }
+
+        /* 本体层：专职负责特效和缩放，不再受滚动坐标干扰 */
+        .bg-image {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            will-change: transform, filter, opacity;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.3) 100%);
+            z-index: 2;
+        }
+
+        .content {
+            position: relative;
+            z-index: 3;
+            max-width: 64rem;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .text-line {
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .reveal-text {
+            display: inline-block;
+            will-change: transform, opacity, filter;
+        }
+
+        .academic-citation {
+            position: absolute;
+            bottom: 3rem;
+            right: 3rem;
+            font-size: 0.75rem;
+            font-family: 'Inter', sans-serif;
+            color: rgba(255, 255, 255, 0.4);
+            border-left: 2px solid rgba(255, 255, 255, 0.2);
+            padding-left: 1rem;
+            text-align: left;
+            z-index: 10;
+        }
+
+        .ghost-btn {
+            margin-top: 3rem;
+            padding: 1rem 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: transparent;
+            backdrop-filter: blur(4px); 
+            color: white;
+            font-family: 'Syncopate', sans-serif;
+            font-weight: 400;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            cursor: pointer;
+            transition: color 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                        box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                        transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            z-index: 50; 
+            pointer-events: auto; 
+            overflow: hidden;
+        }
+        
+        .ghost-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            transform: translateX(-101%);
+            transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+            z-index: -1;
+        }
+
+        .ghost-btn:hover {
+            color: black;
+            border-color: white;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+            transform: translateY(-2px); 
+        }
+
+        .ghost-btn:hover::before {
+            transform: translateX(0);
+        }
+
+        .bg-grid {
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="panel">
+        <div class="img-container intro-container">
+            <div class="parallax-wrap">
+                <div class="bg-image intro-bg" style="background-image: url('Intro.png');"></div>
+            </div>
+            <div class="overlay bg-black/40"></div>
+        </div>
+        <div class="content">
+            <h1 class="text-3xl md:text-5xl font-light mb-4 text-gray-300 text-line syncopate-font tracking-widest">
+                <span class="reveal-text intro-text">The Convergence of</span>
+            </h1>
+            <br>
+            <h1 class="text-6xl md:text-8xl font-bold text-white text-line">
+                <span class="reveal-text intro-text">AI & Aging</span>
+            </h1>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="img-container scene1-container">
+            <div class="parallax-wrap">
+                <div class="bg-image scene1-bg" style="background-image: url('scene1.png');"></div>
+            </div>
+            <div class="overlay"></div>
+        </div>
+        <div class="content">
+            <h1 class="text-5xl md:text-7xl font-bold mb-8 text-red-500 text-line">
+                <span class="reveal-text scene1-text">The Care Crisis</span>
+            </h1>
+            <br>
+            <p class="text-xl md:text-3xl font-light leading-relaxed text-gray-200 text-line">
+                <span class="reveal-text scene1-text">By 2049, the demand for nursing staff is expected to surge,</span>
+            </p>
+            <br>
+            <p class="text-xl md:text-3xl font-light leading-relaxed text-gray-200 text-line">
+                <span class="reveal-text scene1-text">leading to a massive shortage of qualified specialists.</span>
+            </p>
+        </div>
+        <div class="academic-citation hidden md:block">
+            Source: ERGO Report 2024<br>
+            <span class="text-red-400">Projected 1M Staff Deficit</span>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="img-container scene2-container">
+            <div class="parallax-wrap">
+                <div class="bg-image scene2-bg" style="background-image: url('scene2.png');"></div>
+            </div>
+            <div class="overlay"></div>
+        </div>
+        <div class="content">
+            <h2 class="text-4xl md:text-6xl font-bold mb-8 text-gray-300 text-line">
+                <span class="reveal-text scene2-text">The Stigma Barrier</span>
+            </h2>
+            <br>
+            <p class="text-xl md:text-3xl font-light leading-relaxed text-gray-200 text-line">
+                <span class="reveal-text scene2-text">Assistive technology often evokes negative associations</span>
+            </p>
+            <br>
+            <p class="text-xl md:text-3xl font-light leading-relaxed text-gray-200 text-line">
+                <span class="reveal-text scene2-text">like stigma, and a threat to personal dignity.</span>
+            </p>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="img-container scene3-container">
+            <div class="parallax-wrap">
+                <div class="bg-image scene3-bg" style="background-image: url('scene3.png');"></div>
+            </div>
+            <div class="overlay"></div>
+        </div>
+        <div class="content">
+            <h2 class="text-4xl md:text-6xl font-bold mb-8 text-blue-500 text-line">
+                <span class="reveal-text scene3-text">Cognitive Overload</span>
+            </h2>
+            <br>
+            <p class="text-xl md:text-3xl font-light leading-relaxed text-gray-200 text-line">
+                <span class="reveal-text scene3-text">Even advanced solutions like BCI wheelchairs</span>
+            </p>
+            <br>
+            <p class="text-xl md:text-3xl font-light leading-relaxed text-gray-200 text-line">
+                <span class="reveal-text scene3-text">can overwhelm users with high mental workload.</span>
+            </p>
+            <br>
+            <div class="text-line mt-8 relative z-50">
+                <button id="bci-trigger" class="ghost-btn reveal-text scene3-text">[ EXPLORE SSVEP DATA ]</button>
+            </div>
+        </div>
+        <div class="academic-citation hidden md:block">
+            Rivera-Flor et al., 2024<br>
+            <span class="text-blue-400">High workload limits task performance</span>
+        </div>
+    </section>
+
+    <section class="panel bg-[#050505]">
+        <div class="img-container scene4-container">
+            <div class="parallax-wrap">
+                <div class="bg-image scene4-bg" style="background-image: url('scene4.png');"></div>
+            </div>
+            <div class="overlay bg-black/50"></div>
+        </div>
+        <div class="content">
+            <h2 class="text-5xl md:text-7xl font-bold mb-8 text-green-400 text-line">
+                <span class="reveal-text scene4-text">Human-Centric AI</span>
+            </h2>
+            <br>
+            <p class="text-xl md:text-3xl font-light leading-relaxed text-gray-200 text-line">
+                <span class="reveal-text scene4-text">Social robots use AI to create personalized stories,</span>
+            </p>
+            <br>
+            <p class="text-xl md:text-3xl font-light leading-relaxed text-gray-200 text-line">
+                <span class="reveal-text scene4-text">proving tech must adapt to human emotions.</span>
+            </p>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="img-container outro-container">
+            <div class="parallax-wrap">
+                <div class="bg-image outro-bg" style="background-image: url('outro.png');"></div>
+            </div>
+            <div class="overlay bg-gradient-to-t from-black via-transparent to-black/30"></div>
+        </div>
+        <div class="content">
+            <h2 class="text-4xl md:text-6xl font-bold mb-8 text-white text-line">
+                <span class="reveal-text outro-text">A Future with Dignity</span>
+            </h2>
+            <br>
+            <p class="text-xl md:text-2xl font-light leading-relaxed text-gray-200 text-line">
+                <span class="reveal-text outro-text">Technology isn't just about functionality.</span>
+            </p>
+            <br>
+            <p class="text-xl md:text-2xl font-light leading-relaxed text-gray-200 text-line">
+                <span class="reveal-text outro-text">It's about empowering the human experience.</span>
+            </p>
+        </div>
+    </section>
+
+    <div id="transition-overlay" class="fixed inset-0 bg-[#050505] z-[60] pointer-events-none hidden"></div>
+
+    <div id="sub-page" class="fixed inset-0 z-[55] bg-[#0a0a0a] hidden flex-col items-center justify-center">
+        <div class="absolute inset-0 bg-grid"></div>
+        
+        <button id="close-sub-page" class="absolute top-8 right-8 text-gray-400 hover:text-white font-syncopate tracking-widest text-sm transition-colors z-[70] p-4">
+            [ CLOSE ]
+        </button>
+
+        <div class="relative z-10 max-w-6xl w-full px-6 flex flex-col md:flex-row gap-16 items-center">
+            
+            <div class="flex-1 w-full bg-black/60 border border-gray-800 p-8 sub-element backdrop-blur-md">
+                <p class="text-blue-500 font-syncopate text-xs tracking-widest mb-6">Visual Stimulation Stress Test</p>
+                <div class="h-48 flex items-end justify-center gap-4 border-b border-gray-700 pb-2 relative">
+                    <div class="w-12 bg-gray-700 h-[20%] relative group"><span class="absolute -top-6 left-2 text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">T1</span></div>
+                    <div class="w-12 bg-gray-600 h-[40%] relative group"><span class="absolute -top-6 left-2 text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">T2</span></div>
+                    <div class="w-12 bg-blue-600 h-[75%] relative group"><span class="absolute -top-6 left-2 text-xs text-blue-300 opacity-0 group-hover:opacity-100 transition-opacity">T3</span></div>
+                    <div class="w-12 bg-red-600 h-[95%] shadow-[0_0_15px_rgba(220,38,38,0.5)] relative group"><span class="absolute -top-6 left-2 text-xs text-red-300 opacity-0 group-hover:opacity-100 transition-opacity">Max</span></div>
+                    
+                    <div class="absolute top-1/4 left-0 w-full border-t border-dashed border-red-500/50"></div>
+                </div>
+                <div class="mt-4 flex justify-between text-xs text-gray-500 font-mono">
+                    <span>Task Onset</span>
+                    <span>Critical Overload Point</span>
+                </div>
+            </div>
+
+            <div class="flex-1 sub-element">
+                <h3 class="text-3xl md:text-5xl font-syncopate text-white mb-8">The High Cost <br><span class="text-blue-500">of Control</span></h3>
+                <ul class="space-y-8 text-gray-300 font-light text-lg">
+                    <li class="border-l-2 border-blue-500 pl-6">
+                        <strong class="text-white block mb-2 font-syncopate text-sm tracking-wide">Ocular Fatigue & Cybersickness</strong>
+                        Prolonged exposure to high-frequency flashing visual stimuli (SSVEP) induces severe eye strain, directly hindering the user's practical usability and endurance.
+                    </li>
+                    <li class="border-l-2 border-red-500 pl-6">
+                        <strong class="text-white block mb-2 font-syncopate text-sm tracking-wide">Mental Bandwidth Drain</strong>
+                        The cognitive focus required to navigate virtual environments limits the user's ability to engage in normal social interactions, isolating them further.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smooth: true
+        });
+
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => { lenis.raf(time * 1000) });
+        gsap.ticker.lagSmoothing(0);
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- 修复黑边的终极奥义：视差动画只针对外层装甲 .parallax-wrap ---
+        // 起点是 -20vh，终点强行锁死在位移 20vh 的距离，完美闭环！
+        gsap.utils.toArray('.parallax-wrap').forEach(wrap => {
+            gsap.to(wrap, {
+                y: "20vh", 
+                ease: "none",
+                scrollTrigger: {
+                    trigger: wrap.closest('.panel'),
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
+            });
+        });
+
+        // --- INTRO ---
+        gsap.fromTo(".intro-bg", 
+            { scale: 1.5, filter: "blur(25px) brightness(0.5)" }, 
+            { scale: 1, filter: "blur(0px) brightness(1)", duration: 3, ease: "power3.out" }
+        );
+        gsap.fromTo(".intro-text", 
+            { y: "120%", opacity: 0, letterSpacing: "0.2em" }, 
+            { y: "0%", opacity: 1, letterSpacing: "0.05em", duration: 2, stagger: 0.3, ease: "expo.out", delay: 0.8 }
+        );
+
+        // --- SCENE 1 ---
+        const tl1 = gsap.timeline({ scrollTrigger: { trigger: ".scene1-container", start: "top 65%", toggleActions: "play none none reverse" } });
+        gsap.set(".scene1-container", { clipPath: "inset(0% 0% 100% 0%)" }); 
+        tl1.to(".scene1-container", { clipPath: "inset(0% 0% 0% 0%)", duration: 1.4, ease: "power3.inOut" })
+           .fromTo(".scene1-bg", { scale: 1.1 }, { scale: 1, duration: 2, ease: "power3.out" }, "-=1.4")
+           .fromTo(".scene1-text", { y: "100%", opacity: 0 }, { y: "0%", opacity: 1, duration: 1.2, stagger: 0.15, ease: "power3.out" }, "-=1.0");
+
+        // --- SCENE 2 ---
+        const tl2 = gsap.timeline({ scrollTrigger: { trigger: ".scene2-container", start: "top 65%", toggleActions: "play none none reverse" } });
+        gsap.set(".scene2-container", { clipPath: "polygon(100% 0%, 200% 0%, 200% 100%, 150% 100%)" }); 
+        tl2.to(".scene2-container", { clipPath: "polygon(-50% 0%, 200% 0%, 200% 100%, 0% 100%)", duration: 1.6, ease: "power3.inOut" })
+           .fromTo(".scene2-bg", { scale: 1.15, x: "3%" }, { scale: 1, x: "0%", duration: 2, ease: "power3.out" }, "-=1.6")
+           .fromTo(".scene2-text", { x: "-30%", opacity: 0 }, { x: "0%", opacity: 1, duration: 1.2, stagger: 0.15, ease: "power3.out" }, "-=1.2");
+
+        // --- SCENE 3 ---
+        const tl3 = gsap.timeline({ scrollTrigger: { trigger: ".scene3-container", start: "top 65%", toggleActions: "play none none reverse" } });
+        gsap.set(".scene3-container", { clipPath: "inset(50% 50% 50% 50%)" }); 
+        tl3.to(".scene3-container", { clipPath: "inset(0% 0% 0% 0%)", duration: 1.4, ease: "power4.inOut" })
+           .fromTo(".scene3-bg", { scale: 1.2 }, { scale: 1, duration: 2, ease: "power3.out" }, "-=1.4")
+           .fromTo(".scene3-text", { y: "100%", opacity: 0 }, { y: "0%", opacity: 1, duration: 1.2, stagger: 0.1, ease: "power3.out" }, "-=1.0");
+
+        // --- SCENE 4 ---
+        const tl4 = gsap.timeline({ scrollTrigger: { trigger: ".scene4-container", start: "top 60%", toggleActions: "play none none reverse" } });
+        gsap.set(".scene4-container", { clipPath: "inset(15% 15% 15% 15% round 40px)", opacity: 0 });
+        tl4.to(".scene4-container", { clipPath: "inset(0% 0% 0% 0% round 0px)", opacity: 1, duration: 1.8, ease: "power2.inOut" })
+           .fromTo(".scene4-bg", { scale: 1.1 }, { scale: 1, duration: 2.2, ease: "power2.out" }, "-=1.8")
+           .fromTo(".scene4-text", { y: "40%", opacity: 0, filter: "blur(8px)" }, { y: "0%", opacity: 1, filter: "blur(0px)", duration: 1.5, stagger: 0.2, ease: "power2.out" }, "-=1.2");
+
+        // --- OUTRO ---
+        const tl5 = gsap.timeline({ scrollTrigger: { trigger: ".outro-container", start: "top 70%", toggleActions: "play none none reverse" } });
+        gsap.set(".outro-container", { filter: "brightness(0.3) grayscale(100%)" }); 
+        tl5.to(".outro-container", { filter: "brightness(1) grayscale(0%)", duration: 2, ease: "power2.inOut" })
+           .fromTo(".outro-bg", { scale: 1.1, y: "5%" }, { scale: 1, y: "0%", duration: 2.5, ease: "power2.out" }, "-=2")
+           .fromTo(".outro-text", { y: "50%", opacity: 0, filter: "blur(5px)" }, { y: "0%", opacity: 1, filter: "blur(0px)", duration: 1.5, stagger: 0.2, ease: "power2.out" }, "-=1.5");
+
+        // --- SUB-PAGE TRANSITION LOGIC ---
+        const bciBtn = document.getElementById('bci-trigger');
+        const closeBtn = document.getElementById('close-sub-page');
+        const subPage = document.getElementById('sub-page');
+        const transitionOverlay = document.getElementById('transition-overlay');
+
+        bciBtn.addEventListener('click', () => {
+            lenis.stop(); 
+            const tl = gsap.timeline();
+            
+            // "Iris Expand" + "Deep Dive" 爆发转场
+            tl.set(subPage, { display: "flex", clipPath: "circle(0% at 50% 50%)" })
+              .to(subPage, { clipPath: "circle(150% at 50% 50%)", duration: 1.2, ease: "expo.inOut" })
+              .fromTo(".sub-element", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: "power3.out" }, "-=0.6");
+        });
+
+        closeBtn.addEventListener('click', () => {
+            const tl = gsap.timeline();
+            
+            // 收缩回一个点并消失
+            tl.to(subPage, { clipPath: "circle(0% at 50% 50%)", duration: 1.0, ease: "expo.inOut" })
+              .set(subPage, { display: "none" })
+              .call(() => { lenis.start(); }); 
+        });
+
+    </script>
+</body>
+</html>
