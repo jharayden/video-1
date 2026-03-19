@@ -14,6 +14,11 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;600&display=swap');
         
+        /* 全局 1.5 倍缩放引擎：将基准 1rem 从 16px 强力拉升至 24px */
+        html {
+            font-size: 24px;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #050505;
@@ -312,34 +317,53 @@
 
         <div class="relative z-10 max-w-6xl w-full px-6 flex flex-col md:flex-row gap-16 items-center">
             
-            <div class="flex-1 w-full bg-black/60 border border-gray-800 p-8 sub-element backdrop-blur-md">
-                <p class="text-blue-500 font-syncopate text-xs tracking-widest mb-6">Visual Stimulation Stress Test</p>
-                <div class="h-48 flex items-end justify-center gap-4 border-b border-gray-700 pb-2 relative">
-                    <div class="w-12 bg-gray-700 h-[20%] relative group"><span class="absolute -top-6 left-2 text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">T1</span></div>
-                    <div class="w-12 bg-gray-600 h-[40%] relative group"><span class="absolute -top-6 left-2 text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">T2</span></div>
-                    <div class="w-12 bg-blue-600 h-[75%] relative group"><span class="absolute -top-6 left-2 text-xs text-blue-300 opacity-0 group-hover:opacity-100 transition-opacity">T3</span></div>
-                    <div class="w-12 bg-red-600 h-[95%] shadow-[0_0_15px_rgba(220,38,38,0.5)] relative group"><span class="absolute -top-6 left-2 text-xs text-red-300 opacity-0 group-hover:opacity-100 transition-opacity">Max</span></div>
-                    
-                    <div class="absolute top-1/4 left-0 w-full border-t border-dashed border-red-500/50"></div>
-                </div>
-                <div class="mt-4 flex justify-between text-xs text-gray-500 font-mono">
-                    <span>Task Onset</span>
-                    <span>Critical Overload Point</span>
+            <div class="flex-1 w-full p-8 sub-element border-l-2 border-blue-500/30 bg-gradient-to-r from-blue-900/10 to-transparent">
+                <p class="text-blue-400 font-syncopate text-sm tracking-widest mb-6 border-b border-blue-500/20 pb-2 inline-block">
+                    (Rivera-Flor et al., 2024)
+                </p>
+                <h3 class="text-4xl md:text-5xl font-light text-white mb-10 leading-tight">
+                    Brain-Computer <br><span class="font-bold font-syncopate text-blue-500">Interface</span>
+                </h3>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-4 group">
+                        <div class="w-12 h-[1px] bg-blue-500 group-hover:w-16 transition-all duration-300"></div>
+                        <p class="text-2xl text-gray-300 font-light tracking-wide">Useful Tool</p>
+                    </div>
+                    <div class="flex items-center gap-4 group">
+                        <div class="w-12 h-[1px] bg-blue-500 group-hover:w-16 transition-all duration-300"></div>
+                        <p class="text-2xl text-gray-300 font-light tracking-wide">Live More Independently</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="flex-1 sub-element">
-                <h3 class="text-3xl md:text-5xl font-syncopate text-white mb-8">The High Cost <br><span class="text-blue-500">of Control</span></h3>
-                <ul class="space-y-8 text-gray-300 font-light text-lg">
-                    <li class="border-l-2 border-blue-500 pl-6">
-                        <strong class="text-white block mb-2 font-syncopate text-sm tracking-wide">Ocular Fatigue & Cybersickness</strong>
-                        Prolonged exposure to high-frequency flashing visual stimuli (SSVEP) induces severe eye strain, directly hindering the user's practical usability and endurance.
-                    </li>
-                    <li class="border-l-2 border-red-500 pl-6">
-                        <strong class="text-white block mb-2 font-syncopate text-sm tracking-wide">Mental Bandwidth Drain</strong>
-                        The cognitive focus required to navigate virtual environments limits the user's ability to engage in normal social interactions, isolating them further.
-                    </li>
-                </ul>
+            <div class="flex-1 w-full bg-[#0a0a0a] border border-red-900/50 p-10 sub-element relative overflow-hidden shadow-[0_0_40px_rgba(220,38,38,0.1)]">
+                <div class="absolute top-0 right-0 w-48 h-48 bg-red-600/10 blur-[50px] -z-10 pointer-events-none"></div>
+                
+                <h3 class="text-4xl md:text-6xl font-syncopate font-bold text-white mb-8 relative z-10">
+                    Totally <br><span class="text-red-500 line-through decoration-red-600 decoration-[6px] opacity-90">Successful?</span>
+                </h3>
+                
+                <div class="mt-8 space-y-4 relative z-10">
+                    <div class="p-6 border border-gray-800 bg-black/50 backdrop-blur-md">
+                        <p class="text-red-400 font-syncopate text-xs tracking-widest mb-4 opacity-70">User Internal State</p>
+                        <ul class="text-gray-200 text-xl font-light space-y-3">
+                            <li class="flex items-center gap-3">
+                                <span class="text-red-500 animate-pulse">■</span> Disoriented
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="text-red-500 animate-pulse">■</span> Mentally Overloaded
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="flex justify-center py-2 text-red-500 text-2xl opacity-50">
+                        ▼
+                    </div>
+                    
+                    <div class="p-4 bg-red-950/40 border-l-4 border-red-500">
+                        <p class="text-white text-2xl font-bold tracking-wide uppercase">Difficult to operate</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
